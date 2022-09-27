@@ -6,7 +6,7 @@ temp/
 .env
 coverage
 ormconfig.json
-dist
+src/shared/toFill.txt
 
 uploads/*
 !uploads/.gitkeep
