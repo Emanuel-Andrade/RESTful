@@ -4,6 +4,7 @@ import cors from 'cors';
 import { load } from 'ts-dotenv/index';
 import AppError from '../errors/appError';
 import routes from './routes';
+import '../typeorm';
 
 const app = express();
 const env = load({
