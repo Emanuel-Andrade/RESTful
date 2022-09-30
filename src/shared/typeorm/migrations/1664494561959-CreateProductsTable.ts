@@ -6,7 +6,7 @@ export default class CreateProductsTable1664494561959
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'produts',
+        name: 'products',
         columns: [
           {
             name: 'id',
@@ -26,10 +26,8 @@ export default class CreateProductsTable1664494561959
             precision: 10,
           },
           {
-            name: 'price',
-            type: 'decimal',
-            scale: 2,
-            precision: 10,
+            name: 'qunatity',
+            type: 'int',
           },
           {
             name: 'created_at',
