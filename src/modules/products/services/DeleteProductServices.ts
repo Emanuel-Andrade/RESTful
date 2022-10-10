@@ -3,7 +3,7 @@ import Product from '../typeorm/entities/Product';
 import ProductRepository from '../typeorm/ProductsRepository/ProductsRepository';
 
 class CreateProduct {
-  public async show(id: string): Promise<Product> {
+  public async delete(id: string): Promise<Product> {
     const product = await ProductRepository.findOne(id);
 
     if (!product) throw new AppError('There is no product with this id');

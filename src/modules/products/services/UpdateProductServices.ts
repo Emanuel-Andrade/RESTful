@@ -10,7 +10,12 @@ interface IRequest {
 }
 
 class CreateProduct {
-  public async show({ id, name, price, quantity }: IRequest): Promise<Product> {
+  public async update({
+    id,
+    name,
+    price,
+    quantity,
+  }: IRequest): Promise<Product> {
     const product = await ProductRepository.findOne(id);
 
     if (!product) throw new AppError('There is no product with this id');
