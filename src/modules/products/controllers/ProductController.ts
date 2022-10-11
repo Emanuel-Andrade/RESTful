@@ -35,9 +35,10 @@ class ProductController {
 
   public async delete(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
-    const product = await DeleteProductServices.delete(id);
+    await DeleteProductServices.delete(id);
+    const products = await ListProductServices.list();
 
-    return res.json(product);
+    return res.json(products);
   }
 }
 
