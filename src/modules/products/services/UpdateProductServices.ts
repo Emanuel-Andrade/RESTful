@@ -1,3 +1,4 @@
+import { getCustomRepository } from 'typeorm';
 import AppError from 'src/shared/errors/appError';
 import Product from '../typeorm/entities/Product';
 import ProductRepository from '../typeorm/ProductsRepository/ProductsRepository';
@@ -16,11 +17,12 @@ class CreateProduct {
     price,
     quantity,
   }: IRequest): Promise<Product> {
-    const product = await ProductRepository.findOne(id);
+    const CProductRepository = getCustomRepository(ProductRepository);
+    const product = await CProductRepository.findOne(id);
 
     if (!product) throw new AppError('There is no product with this id');
 
-    const hasProduct = await ProductRepository.findByName(name);
+    const hasProduct = await CProductRepository.findByName(name);
 
     if (hasProduct && name !== product.name)
       throw new AppError('There is already an product with this name');
@@ -29,7 +31,7 @@ class CreateProduct {
     product.price = price;
     product.quantity = quantity;
 
-    await ProductRepository.save(product);
+    await CProductRepository.save(product);
     return product;
   }
 }

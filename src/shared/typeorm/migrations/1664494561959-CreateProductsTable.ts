@@ -26,7 +26,7 @@ export default class CreateProductsTable1664494561959
             precision: 10,
           },
           {
-            name: 'qunatity',
+            name: 'quantity',
             type: 'int',
           },
           {
