@@ -9,12 +9,13 @@ interface IRequest {
 }
 class CreateProduct {
   public async create({ name, price, quantity }: IRequest): Promise<IRequest> {
-    const hasProduct = await ProductRepository.findByName(name);
+    const CProductRepository = getCustomRepository(ProductRepository);
+    const hasProduct = await CProductRepository.findByName(name);
 
     if (hasProduct)
       throw new AppError('There is already an product with this name');
-    const product = ProductRepository.create({ name, price, quantity });
-    ProductRepository.save(product);
+    const product = CProductRepository.create({ name, price, quantity });
+    CProductRepository.save(product);
 
     return product;
   }

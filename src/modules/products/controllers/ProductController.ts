@@ -20,14 +20,14 @@ class ProductController {
   }
 
   public async create(req: Request, res: Response): Promise<Response> {
-    const { data } = req.body;
+    const data = req.body;
     const product = await CreateProductServices.create(data);
 
     return res.json(product);
   }
 
   public async update(req: Request, res: Response): Promise<Response> {
-    const { data } = req.body;
+    const data = req.body;
     const product = await UpdateProductServices.update(data);
 
     return res.json(product);

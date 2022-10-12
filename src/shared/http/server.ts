@@ -24,7 +24,7 @@ app.use((error: Error, request: Request, response: Response) => {
         status: 'error',
         message: error.message,
       })
-      .status(error.statusCode);
+      .status(400);
   }
   return response
     .json({
