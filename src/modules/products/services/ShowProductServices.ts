@@ -8,7 +8,7 @@ class CreateProduct {
     const CProductRepository = getCustomRepository(ProductRepository);
     const product = await CProductRepository.findOne(id);
 
-    if (!product) throw new AppError('There is no product with this id');
+    if (!product) throw new AppError('There is no product with this id', 404);
     return product;
   }
 }

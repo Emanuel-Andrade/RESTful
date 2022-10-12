@@ -1,5 +1,6 @@
 import 'reflect-metadata';
-import express, { Request, Response } from 'express';
+import express, { NextFunction, Request, Response } from 'express';
+import 'express-async-errors';
 import cors from 'cors';
 import { load } from 'ts-dotenv/index';
 import AppError from '../errors/appError';
@@ -17,22 +18,22 @@ const env = load({
 app.use(cors());
 app.use(express.json());
 app.use(routes);
-app.use((error: Error, request: Request, response: Response) => {
-  if (error instanceof AppError) {
-    return response
-      .json({
+app.use(
+  (error: Error, request: Request, response: Response, next: NextFunction) => {
+    console.log('banana')
+    if (error instanceof AppError) {
+      return response.status(error.statusCode).json({
         status: 'error',
         message: error.message,
-      })
-      .status(400);
-  }
-  return response
-    .json({
+      });
+    }
+    console.log('moca')
+    return response.status(500).json({
       status: 'error',
       message: 'Internal server error',
-    })
-    .status(500);
-});
+    });
+  },
+);
 app.listen(env.PORT, () => {
   console.log(`server is running on ${env.PORT}`);
 });
