@@ -20,6 +20,15 @@ class UserRepository extends Repository<User> {
     });
     return result;
   }
+
+  public async findById(id: string): Promise<User | undefined> {
+    const result = await this.findOne({
+      where: {
+        id,
+      },
+    });
+    return result;
+  }
 }
 
 export default UserRepository;
