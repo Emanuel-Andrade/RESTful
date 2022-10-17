@@ -1,5 +1,6 @@
 import { getCustomRepository } from 'typeorm';
 import AppError from 'src/shared/errors/appError';
+import { hash } from 'bcryptjs';
 import UserRepository from '../typeorm/repositories/UserRepository';
 
 interface IRequest {
@@ -13,7 +14,13 @@ class CreateUser {
 
     const emailExist = await customUserRepository.findByEmail(email);
     if (emailExist) throw new AppError('Email address already registered');
-    const product = customUserRepository.create({ name, email, password });
+
+    const hashedPassword = await hash(password, 8);
+    const product = customUserRepository.create({
+      name,
+      email,
+      password: hashedPassword,
+    });
     customUserRepository.save(product);
 
     return product;
