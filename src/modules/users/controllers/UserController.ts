@@ -6,7 +6,6 @@ import ListUsersService from '../services/ListUsersService';
 class UserController {
   public async index(req: Request, res: Response): Promise<Response> {
     const result = await ListUsersService.list();
-    console.log(result);
     return res.json(result);
   }
 
