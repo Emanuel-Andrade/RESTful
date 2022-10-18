@@ -8,6 +8,11 @@ import UserRepository from '../typeorm/repositories/UserRepository';
 interface IRequest {
   userId: string;
   avatarFileName: string;
+}
+
+interface Iresponse {
+  userId: string;
+  avatarFileName: string;
   name: string;
 }
 
@@ -15,7 +20,7 @@ class UploadUserAvatarService {
   public async execute({
     userId,
     avatarFileName,
-  }: IRequest): Promise<IRequest> {
+  }: IRequest): Promise<Iresponse> {
     const customUserRepository = getCustomRepository(UserRepository);
 
     const user = await customUserRepository.findById(userId);
