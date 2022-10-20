@@ -11,8 +11,8 @@ interface IRequest {
 }
 
 interface Iresponse {
-  userId: string;
-  avatarFileName: string;
+  id: string;
+  avatar: string;
   name: string;
 }
 
@@ -26,15 +26,14 @@ class UploadUserAvatarService {
     const user = await customUserRepository.findById(userId);
     if (!user) throw new AppError('User not found', 401);
 
-    if (user.avatar) {
+    if (user) {
       const userAvatarFilePath = path.join(authConfig.directory, user.avatar);
       const avatarExist = await fs.promises.stat(userAvatarFilePath);
       if (avatarExist) fs.promises.unlink(userAvatarFilePath);
     }
     user.avatar = avatarFileName;
-
-    await customUserRepository.save(user);
-    return { userId, avatarFileName, name: user.name };
+    const newUser = await customUserRepository.save(user);
+    return { id: newUser.id, avatar: newUser.avatar, name: newUser.name };
   }
 }
 export default new UploadUserAvatarService();

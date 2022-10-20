@@ -1,10 +1,12 @@
 import { Request, Response } from 'express';
+import AppError from 'src/shared/errors/appError';
 import UploadUserAvatarService from '../services/UploadUserAvatarService';
 
 class UserController {
-  public async index(req: Request, res: Response): Promise<Response> {
-    const { filename } = req.body;
-    const user = UploadUserAvatarService.execute({
+  public async execute(req: Request, res: Response): Promise<Response> {
+    if (!req.file) throw new AppError('image not sent', 400);
+    const { filename } = req.file;
+    const user = await UploadUserAvatarService.execute({
       userId: req.user.id,
       avatarFileName: filename,
     });
