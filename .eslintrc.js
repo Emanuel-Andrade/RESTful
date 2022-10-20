@@ -20,5 +20,6 @@ module.exports = {
     'import/no-unresolved': 0,
     'import/extensions': 0,
     'class-methods-use-this': 0,
+    camelcase: 0,
   },
 };
