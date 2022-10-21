@@ -10,6 +10,7 @@ const routes = Router();
 const upload = multer(uploadConfig);
 
 routes.get('/', IsAuthenticated.execute, UserController.index);
+routes.get('/:id', IsAuthenticated.execute, UserAvatarController.execute);
 routes.post(
   '/',
   celebrate({
