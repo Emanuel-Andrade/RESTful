@@ -20,6 +20,12 @@ class UserController {
     const result = await CreateSessionService.login(data);
     return res.json(result);
   }
+
+  public async findById(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+    const result = await ListUsersService.findById(id);
+    return res.json(result);
+  }
 }
 
 export default new UserController();

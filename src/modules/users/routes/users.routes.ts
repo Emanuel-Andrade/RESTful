@@ -10,13 +10,13 @@ const routes = Router();
 const upload = multer(uploadConfig);
 
 routes.get('/', IsAuthenticated.execute, UserController.index);
-routes.get('/:id', IsAuthenticated.execute, UserAvatarController.execute);
+routes.get('/:id', IsAuthenticated.execute, UserController.findById);
 routes.post(
   '/',
   celebrate({
     [Segments.BODY]: {
       name: Joi.string().required(),
-      email: Joi.string().required(),
+      email: Joi.string().email().required(),
       password: Joi.string().required(),
     },
   }),
