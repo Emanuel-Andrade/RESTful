@@ -7,7 +7,7 @@ interface IRequest {
   email: string;
 }
 class SendForgotPasswordToEmailService {
-  public async create({ email }: IRequest): Promise<string> {
+  public async create({ email }: IRequest): Promise<void> {
     const customUserRepository = getCustomRepository(UserRepository);
     const customUserTokenRepository = getCustomRepository(UserTokenRepository);
 
@@ -15,8 +15,6 @@ class SendForgotPasswordToEmailService {
     if (!user) throw new AppError('User does not exists.', 404);
 
     await customUserTokenRepository.generateToken(user.id);
-
-    return `Password recovery token successfully sent to email:${email}`;
   }
 }
 export default new SendForgotPasswordToEmailService();
