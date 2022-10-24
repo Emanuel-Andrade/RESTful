@@ -16,7 +16,6 @@ class SendForgotPasswordToEmailService {
 
     const tokenExists = await customUserTokenRepository.findByToken(token);
     if (!tokenExists) throw new AppError('User Token does not exists.', 404);
-
     const user = await customUserRepository.findById(tokenExists.user_id);
     if (!user) throw new AppError('User does not exists.', 404);
 
@@ -26,6 +25,7 @@ class SendForgotPasswordToEmailService {
     }
     user.password = await hash(password, 8);
     await customUserRepository.save(user);
+    console.log(user);
   }
 }
 export default new SendForgotPasswordToEmailService();

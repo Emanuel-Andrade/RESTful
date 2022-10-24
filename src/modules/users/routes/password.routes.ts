@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { Segments, Joi, celebrate } from 'celebrate';
-import RecoveryPassword from '../controllers/CreatePasswordTokenController';
+import CreateTokenPassword from '../controllers/CreatePasswordTokenController';
+import RecoveryPassword from '../controllers/RecoveryPasswordController';
 
 const routes = Router();
 
@@ -11,7 +12,7 @@ routes.post(
       email: Joi.string().email().required(),
     },
   }),
-  RecoveryPassword.create,
+  CreateTokenPassword.create,
 );
 
 routes.post(
@@ -20,7 +21,7 @@ routes.post(
     [Segments.BODY]: {
       token: Joi.string().uuid().required(),
       password: Joi.string().required().min(6),
-      passwordConfirmation: Joi.string().required().valid(Joi.ref('password')),
+      password_confirmation: Joi.string().required().valid(Joi.ref('password')),
     },
   }),
   RecoveryPassword.create,
