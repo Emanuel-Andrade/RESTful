@@ -1,4 +1,4 @@
-const nodemailer = require('nodemailer');
+import nodemailer from 'nodemailer';
 
 interface ISendMail {
   to: string;
@@ -6,7 +6,7 @@ interface ISendMail {
 }
 
 class EtherealMail {
-  static async send({ to, body }: ISendMail): Promise<void> {
+  async send({ to, body }: ISendMail): Promise<void> {
     const account = await nodemailer.createTestAccount();
 
     const transporter = nodemailer.createTransport({
@@ -15,7 +15,7 @@ class EtherealMail {
       secure: account.smtp.secure,
       auth: {
         user: account.user,
-        password: account.pass,
+        pass: account.pass,
       },
     });
 
@@ -23,7 +23,7 @@ class EtherealMail {
       from: 'time@apivendas.com',
       to,
       subject: 'Recuperação de Senha',
-      body,
+      text: body,
     });
 
     console.log('message sent: %s', message.messageId);
