@@ -20,7 +20,7 @@ class SendForgotPasswordToEmailService {
       },
       subject: '[ API Vendas ] Recuperação de Senha',
       templateData: {
-        template: `Email de recuperação de senha. Seu token é:${token}`,
+        template: `Olá {{name}}! Esse é seu token de recuperação de senha: {{token}}`,
         variables: {
           name: user.name,
           token,
