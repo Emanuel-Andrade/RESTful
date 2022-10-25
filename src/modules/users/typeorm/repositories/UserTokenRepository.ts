@@ -12,31 +12,25 @@ class UserTokenRepository extends Repository<UserToken> {
     return result;
   }
 
-  public async findByUserId(user_id: string): Promise<UserToken[] | undefined> {
-    const result = await this.find({
+  public async findByUserId(user_id: string): Promise<UserToken | undefined> {
+    const result = await this.findOne({
       where: {
         user_id,
       },
-    });
-    return result;
-  }
-
-  public async findById(id: string): Promise<UserToken | undefined> {
-    const result = await this.findOne({
-      where: {
-        id,
+      order: {
+        created_at: 'DESC',
       },
     });
     return result;
   }
 
-  public async generateToken(user_id: string): Promise<UserToken | undefined> {
+  public async generateToken(user_id: string): Promise<string> {
     const result = await this.create({
       user_id,
     });
 
-    this.save(result);
-    return result;
+    await this.save(result);
+    return result.token;
   }
 }
 
