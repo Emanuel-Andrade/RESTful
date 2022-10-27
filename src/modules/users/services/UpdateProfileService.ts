@@ -13,7 +13,7 @@ interface IRequest {
 }
 
 class UpdateUser {
-  public async findById({ user_id, variables }: IRequest): Promise<User> {
+  public async update({ user_id, variables }: IRequest): Promise<User> {
     const customUserRepository = getCustomRepository(UserRepository);
     const user = await customUserRepository.findById(user_id);
     if (user === undefined) throw new AppError('There is no user');

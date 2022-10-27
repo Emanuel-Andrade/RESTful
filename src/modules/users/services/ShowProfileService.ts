@@ -3,12 +3,8 @@ import AppError from '../../../shared/errors/appError';
 import User from '../typeorm/entities/User';
 import UserRepository from '../typeorm/repositories/UserRepository';
 
-interface IRequest {
-  user_id: string;
-}
-
 class ShowProfileService {
-  public async findById({ user_id }: IRequest): Promise<User> {
+  public async findById(user_id: string): Promise<User> {
     const customUserRepository = getCustomRepository(UserRepository);
     const user = await customUserRepository.findById(user_id);
     if (user === undefined) throw new AppError('There is no user');
