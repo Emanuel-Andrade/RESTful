@@ -4,17 +4,21 @@ import IsAuthenticated from '../middlewares/IsAuthenticated';
 import ProfileController from '../controllers/ProfileController';
 
 const routes = Router();
+routes.use(IsAuthenticated.execute);
 
-routes.get('/', IsAuthenticated.execute, ProfileController.show);
+routes.get('/', ProfileController.show);
 routes.post(
   '/',
   celebrate({
     [Segments.BODY]: {
       name: Joi.string(),
       email: Joi.string().email(),
-      old_password: Joi.string().min(6),
       password: Joi.string().min(6).optional(),
-      password_confirmation: Joi.string()
+      old_password: Joi.string().when('password', {
+        is: Joi.exist(),
+        then: Joi.required(),
+      }),
+      confirmation_password: Joi.string()
         .valid(Joi.ref('password'))
         .when('password', {
           is: Joi.exist(),
