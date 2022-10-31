@@ -5,7 +5,7 @@ import ListCustomersService from '../services/ListCustomerService';
 import DeleteCustomersService from '../services/DeleteCustomerProfile';
 import ShowCustomerProfile from '../services/ShowCustomerProfile';
 
-class UserController {
+class CustomerController {
   public async index(req: Request, res: Response): Promise<Response> {
     const result = await ListCustomersService.list();
     return res.json(result);
@@ -36,4 +36,4 @@ class UserController {
   }
 }
 
-export default new UserController();
+export default new CustomerController();
