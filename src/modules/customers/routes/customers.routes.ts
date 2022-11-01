@@ -19,12 +19,13 @@ routes.post(
 );
 
 routes.put(
-  '/:id',
+  '/',
   IsAuthenticated.execute,
   celebrate({
     [Segments.BODY]: {
       name: Joi.string(),
       email: Joi.string().email(),
+      id: Joi.string().uuid().required(),
     },
   }),
   customerController.update,
