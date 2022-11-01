@@ -23,24 +23,14 @@ routes.put(
   IsAuthenticated.execute,
   celebrate({
     [Segments.BODY]: {
-      name: Joi.string(),
+      name: Joi.string().min(3),
       email: Joi.string().email(),
-      id: Joi.string().uuid().required(),
+      customer_id: Joi.string().uuid().required(),
     },
   }),
   customerController.update,
 );
 
-routes.delete(
-  '/:id',
-  IsAuthenticated.execute,
-  celebrate({
-    [Segments.BODY]: {
-      name: Joi.string(),
-      email: Joi.string().email(),
-    },
-  }),
-  customerController.update,
-);
+routes.delete('/:id', IsAuthenticated.execute, customerController.delete);
 
 export default routes;

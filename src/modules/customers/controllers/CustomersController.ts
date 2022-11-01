@@ -18,8 +18,12 @@ class CustomerController {
   }
 
   public async update(req: Request, res: Response): Promise<Response> {
-    const data = req.body;
-    const result = await UpdateCustomerService.update(data);
+    const { customer_id } = req.body;
+    const variables = req.body;
+    const result = await UpdateCustomerService.update({
+      customer_id,
+      variables,
+    });
     return res.json(result);
   }
 
