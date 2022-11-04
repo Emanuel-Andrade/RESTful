@@ -11,7 +11,7 @@ import OrdersProducts from 'src/modules/orders/typeorm/entities/OrdersProducts';
 @Entity('products')
 class Product {
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
   @OneToMany(() => OrdersProducts, (order_products) => order_products.product)
   order_products: OrdersProducts[];
