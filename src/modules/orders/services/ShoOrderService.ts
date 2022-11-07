@@ -7,7 +7,7 @@ interface IRequest {
   id: string;
 }
 class ShowOrderService {
-  public async create({ id }: IRequest): Promise<Order> {
+  public async show({ id }: IRequest): Promise<Order> {
     const customOrderRepository = getCustomRepository(OrderRepository);
 
     const order = await customOrderRepository.findById(id);
