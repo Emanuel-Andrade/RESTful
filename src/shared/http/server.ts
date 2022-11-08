@@ -3,6 +3,7 @@ import express, { NextFunction, Request, Response } from 'express';
 import 'express-async-errors';
 import { errors } from 'celebrate';
 import cors from 'cors';
+import { pagination } from 'typeorm-pagination';
 import { load } from 'ts-dotenv/index';
 import uploadConfig from 'src/config/upload';
 import AppError from '../errors/appError';
@@ -19,6 +20,7 @@ const env = load({
 
 app.use(cors());
 app.use(express.json());
+app.use(pagination);
 app.use(routes);
 app.use(errors());
 app.use('/files', express.static(uploadConfig.directory));
