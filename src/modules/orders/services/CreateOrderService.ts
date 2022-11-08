@@ -29,20 +29,22 @@ class CreateOrderService {
     const checkInexistentProducts = products.filter(
       (product) => !productsExistsIds.includes(product.id_product),
     );
-    if (checkInexistentProducts)
+    if (checkInexistentProducts.length > 0)
       throw new AppError(
         `could not find product: ${checkInexistentProducts[0].id_product}`,
       );
 
-    const checkUnavailableQuantity = productsExists.filter((product) =>
-      products.filter(
-        (p) => p.id_product === product.id && p.quantity > product.quantity,
-      ),
+    const checkUnavailableQuantity = productsExists.filter(
+      (product) =>
+        products.filter((p) => p.id_product === product.id)[0].quantity >
+        product.quantity,
     );
-    if (checkUnavailableQuantity)
+
+    if (checkUnavailableQuantity.length > 0)
       throw new AppError(
-        `Ordered quantity for the product: ${checkUnavailableQuantity[0].name} is greater than the in-stock quantity`,
+        `Ordered quantity for the product: "${checkUnavailableQuantity[0].name}" is greater than the in-stock quantity`,
       );
+
     const serializedProducts = products.map((product) => ({
       product_id: product.id_product,
       quantity: product.quantity,

@@ -25,7 +25,6 @@ class SendForgotPasswordToEmailService {
     }
     user.password = await hash(password, 8);
     await customUserRepository.save(user);
-    console.log(user);
   }
 }
 export default new SendForgotPasswordToEmailService();
