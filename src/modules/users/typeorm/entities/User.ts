@@ -5,7 +5,12 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Exclude } from 'class-transformer';
+import { Exclude, Expose } from 'class-transformer';
+import { load } from 'ts-dotenv';
+
+const env = load({
+  PORT: String,
+});
 
 @Entity('users')
 class User {
@@ -30,6 +35,13 @@ class User {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @Expose({ name: 'avatar_url' })
+  getAvatarUrl(): string | null {
+    if (!this.avatar) return null;
+
+    return `http://localhost:${env.PORT}/files/${this.avatar}`;
+  }
 }
 
 export default User;
