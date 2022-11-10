@@ -10,15 +10,14 @@ interface ICacheOptions {
 
 const env = load({
   REDIS_HOST: String,
-  REDIS_PASS: String,
-  REDIS_PORT: Number || undefined,
+  REDIS_PORT: Number,
 });
 
 export default {
   config: {
     redis: {
       host: env.REDIS_HOST,
-      password: env.REDIS_PASS,
+      password: undefined,
       port: env.REDIS_PORT,
     },
   },

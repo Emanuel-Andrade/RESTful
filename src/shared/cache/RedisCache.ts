@@ -9,13 +9,20 @@ class RedisCache {
   }
 
   public async save(key: string, value: any): Promise<void> {
-    console.log(key);
-    console.log(value);
+    await this.client.set(key, JSON.stringify(value));
   }
 
-  // public async recover<T>(key: string): Promise<T | null> {}
+  public async recover<T>(key: string): Promise<T | null> {
+    const result = await this.client.get(key);
+    if (!result) return null;
 
-  // public async invalidate(key: string): Promise<void> {}
+    const parserResult = JSON.parse(result) as T;
+    return parserResult;
+  }
+
+  public async invalidate(key: string): Promise<void> {
+    await this.client.del(key);
+  }
 }
 
 export default new RedisCache();

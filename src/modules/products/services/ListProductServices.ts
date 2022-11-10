@@ -1,13 +1,20 @@
 import { getCustomRepository } from 'typeorm';
-import AppError from 'src/shared/errors/appError';
+import RedisCache from 'src/shared/cache/RedisCache';
 import Product from '../typeorm/entities/Product';
 import ProductRepository from '../typeorm/repositories/ProductsRepository';
 
 class ListProducts {
   public async list(): Promise<Product[]> {
     const CProductRepository = getCustomRepository(ProductRepository);
-    const products = await CProductRepository.find();
-    if (products === undefined) throw new AppError('There is no products');
+
+    let products = await RedisCache.recover<Product[]>(
+      'api-vendas-PRODUCT_LIST',
+    );
+
+    if (!products) {
+      products = await CProductRepository.find();
+      RedisCache.save('api-vendas-PRODUCT_LIST', products);
+    }
 
     return products;
   }
